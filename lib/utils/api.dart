@@ -1,5 +1,5 @@
 class Api {
-  static const String baseUrl = "http://192.168.1.74/kenny/api";
+  static const String baseUrl = "http://192.168.1.65/kenny/api";
 
   static const String petItems = "$baseUrl/doctors.php";
   static const String loginUrl = "$baseUrl/login.php";

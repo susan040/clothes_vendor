@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:clothes_vendor/models/doctor_details.dart';
 import 'package:clothes_vendor/utils/storage_keys.dart';
+import 'package:clothes_vendor/views/dashboard/login_screen.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CoreController extends GetxController{
   Rx<User?> currentUser = Rxn<User>();
@@ -25,10 +27,10 @@ class CoreController extends GetxController{
     return currentUser.value != null;
   }
 
-  // void logOut() async {
-  //   final box = GetStorage();
-  //   await box.write(StorageKeys.USER, null);
-  //   loadCurrentUser();
-  //   Get.offAll(LoginScreen());
-  // }
+  void logOut() async {
+    final box = GetStorage();
+    await box.write(StorageKeys.USER, null);
+    loadCurrentUser();
+    Get.offAll(LoginScreen());
+  }
 }

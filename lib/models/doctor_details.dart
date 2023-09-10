@@ -1,7 +1,3 @@
-List<DoctorDetails> doctorsDetailFromJson(List<dynamic> doctorsJson) =>
-    List<DoctorDetails>.from(
-        doctorsJson
-        .map((doctorsJson) => DoctorDetails.fromJson(doctorsJson)));
 class User {
   String? id;
   String? name;
@@ -31,6 +27,8 @@ class User {
         ? DoctorDetails.fromJson(json['doctorDetails'])
         : null;
   }
+
+  get displayImage => null;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

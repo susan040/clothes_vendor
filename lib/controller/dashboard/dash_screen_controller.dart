@@ -8,7 +8,7 @@ class DashScreenController extends GetxController {
   final key = GlobalKey<ScaffoldState>();
   RxList<Widget> pages = RxList([
     HomeScreen(),
-    const HistoryScreen(),
+    HistoryScreen(),
     const ProfileScreen(),
   ]);
 

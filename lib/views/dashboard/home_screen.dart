@@ -1,23 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clothes_vendor/controller/dashboard/home_screen_controller.dart';
-import 'package:clothes_vendor/models/doctor_details.dart';
 import 'package:clothes_vendor/utils/colors.dart';
 import 'package:clothes_vendor/utils/custom_text_styles.dart';
-import 'package:clothes_vendor/views/dashboard/doctor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../controller/core_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = "/home-screen";
   HomeScreen({super.key});
   final c = Get.put(HomeScreenController());
-  // final DoctorDetails selectedDoctor = DoctorDetails(
-  //   id: 'Selected Doctor ID',
-  //   status: 'Selected Doctor Status',
-  //   experience: 'Selected Doctor Experience',
-  //   time: 'Selected Doctor Time',
-  //   displayImage: 'selected_doctor_image_url.jpg',
-  // );
+
+  final coreController = Get.put(CoreController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,33 +21,19 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.white,
-        title: Text("Doctor",
+        leading: InkWell(
+          onTap: () => Get.back(),
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+        title: Text("History",
             style: CustomTextStyles.f16W600(color: AppColors.textColor)),
       ),
-      //body: AllItemsCard(petItems: ),
-    );
-  }
-}
-
-class AllItemsCard extends StatelessWidget {
-  const AllItemsCard({
-    super.key,
-    required this.petItems,
-  });
-
-  final DoctorDetails petItems;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        height: 120,
-        width: double.infinity,
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            color: Colors.black45, borderRadius: BorderRadius.circular(10)),
+      body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -65,7 +46,9 @@ class AllItemsCard extends StatelessWidget {
                   ),
                   fit: BoxFit.fill,
                   height: MediaQuery.of(context).size.height / 2.7,
-                  imageUrl: petItems.displayImage ?? "",
+                  imageUrl: coreController
+                          .currentUser.value!.doctorDetails?.displayImage ??
+                      "",
                   errorWidget: (context, url, error) => Image.asset(
                     'assets/images/profile.jpg',
                     height: MediaQuery.of(context).size.height / 2.7,
@@ -81,9 +64,13 @@ class AllItemsCard extends StatelessWidget {
               onTap: () {},
               title: Row(
                 children: [
-                  const Text("Name:"),
+                  Text("Email:",
+                      style:
+                          CustomTextStyles.f16W600(color: AppColors.textColor)),
                   const SizedBox(width: 5),
-                  Text(petItems.id ?? ""),
+                  Text(coreController.currentUser.value!.email ?? "",
+                      style:
+                          CustomTextStyles.f16W400(color: AppColors.textColor)),
                 ],
               ),
             ),
@@ -94,9 +81,15 @@ class AllItemsCard extends StatelessWidget {
               onTap: () {},
               title: Row(
                 children: [
-                  const Text("Email:"),
+                  Text("Status:",
+                      style:
+                          CustomTextStyles.f16W600(color: AppColors.textColor)),
                   const SizedBox(width: 5),
-                  Text(petItems.status ?? ""),
+                  Text(
+                      coreController.currentUser.value!.doctorDetails?.status ??
+                          "",
+                      style:
+                          CustomTextStyles.f16W400(color: AppColors.textColor)),
                 ],
               ),
             ),
@@ -107,9 +100,16 @@ class AllItemsCard extends StatelessWidget {
               onTap: () {},
               title: Row(
                 children: [
-                  const Text("Email:"),
+                  Text("bioData:",
+                      style:
+                          CustomTextStyles.f16W600(color: AppColors.textColor)),
                   const SizedBox(width: 5),
-                  Text(petItems.experience ?? ""),
+                  Text(
+                      coreController
+                              .currentUser.value!.doctorDetails?.bioData ??
+                          "",
+                      style:
+                          CustomTextStyles.f16W400(color: AppColors.textColor)),
                 ],
               ),
             ),
@@ -120,15 +120,23 @@ class AllItemsCard extends StatelessWidget {
               onTap: () {},
               title: Row(
                 children: [
-                  const Text("Time:"),
+                  Text("Experience:",
+                      style:
+                          CustomTextStyles.f16W600(color: AppColors.textColor)),
                   const SizedBox(width: 5),
-                  Text(petItems.time ?? ""),
+                  Text(
+                      coreController
+                              .currentUser.value!.doctorDetails?.experience ??
+                          "",
+                      style:
+                          CustomTextStyles.f16W400(color: AppColors.textColor)),
                 ],
               ),
             ),
             const Divider(
               thickness: 1,
             ),
+            const SizedBox(height: 30)
           ],
         ),
       ),
